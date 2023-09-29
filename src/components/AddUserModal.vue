@@ -1,25 +1,24 @@
 <template>
   <!-- Modal -->
   <div
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+      @click.stop.prevent="resetInfo"
   >
-    <div class="modal-dialog">
+    <div class="modal-dialog" @click.stop.prevent="">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5">
-            관리 유저 추가
-          </h1>
+          <h1 class="modal-title fs-5">관리 유저 추가</h1>
           <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            @click="initValid"
-            id="cancel"
-            aria-label="Close"
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              @click.prevent.stop="initValid"
+              id="cancel"
+              aria-label="Close"
           ></button>
         </div>
         <div class="modal-body">
@@ -27,78 +26,78 @@
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">이름</label>
               <input
-                v-model="userName"
-                type="text"
-                class="form-control"
-                id="user_name"
+                  v-model="userName"
+                  type="text"
+                  class="form-control"
+                  id="user_name"
               />
             </div>
             <div
-              v-show="isValid.userName"
-              class="alert alert-danger"
-              role="alert"
+                v-show="isValid.userName"
+                class="alert alert-danger"
+                role="alert"
             >
               이름을 입력하세요
             </div>
             <div class="mb-3">
               <label for="message-text" class="col-form-label">전화번호</label>
               <input
-                v-model="phoneNum"
-                type="text"
-                class="form-control"
-                id="phone_num"
+                  v-model="phoneNum"
+                  type="text"
+                  class="form-control"
+                  id="phone_num"
               />
             </div>
             <div
-              v-show="isValid.phoneNum"
-              class="alert alert-danger"
-              role="alert"
+                v-show="isValid.phoneNum"
+                class="alert alert-danger"
+                role="alert"
             >
               핸드폰 번호를 입력하세요
             </div>
             <div class="mb-3">
               <label for="message-text" class="col-form-label">주소</label>
               <input
-                v-model="address"
-                type="text"
-                class="form-control"
-                id="address"
+                  v-model="address"
+                  type="text"
+                  class="form-control"
+                  id="address"
               />
             </div>
             <div
-              v-show="isValid.address"
-              class="alert alert-danger"
-              role="alert"
+                v-show="isValid.address"
+                class="alert alert-danger"
+                role="alert"
             >
               주소를 입력하세요
             </div>
             <div class="mb-3">
               <label for="message-text" class="col-form-label">주민번호</label>
               <input
-                v-model="identityNum"
-                type="text"
-                class="form-control"
-                id="identity_num"
+                  v-model="identityNum"
+                  type="text"
+                  class="form-control"
+                  id="identity_num"
               />
             </div>
             <div
-              v-show="isValid.identityNum"
-              class="alert alert-danger"
-              role="alert"
+                v-show="isValid.identityNum"
+                class="alert alert-danger"
+                role="alert"
             >
               주민 번호를 입력하세요
             </div>
             <div class="mb-3">
               <label for="message-text" class="col-form-label">비고</label>
-              <textarea v-model="note" class="form-control" id="note" />
+              <textarea v-model="note" class="form-control" id="note"/>
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button
-            @click="onClickUserSave"
-            type="button"
-            class="btn btn-primary"
+              @click="onClickUserSave"
+              type="button"
+              class="btn btn-primary"
           >
             저장
           </button>
@@ -109,11 +108,10 @@
 </template>
 
 <script setup>
-import { useStore } from "vuex";
-import { computed, reactive, ref } from "vue";
-import { saveUser } from "@/utils/localStorage";
+import {reactive, ref} from "vue";
+import {saveUser} from "@/utils/localStorage";
+import {v4 as uuid} from "uuid";
 
-const store = useStore();
 const userName = ref("");
 const phoneNum = ref("");
 const address = ref("");
@@ -132,6 +130,7 @@ const initValid = () => {
   isValid.phoneNum = false;
   isValid.address = false;
   isValid.identityNum = false;
+  resetInfo();
 };
 
 const isValidInfo = () => {
@@ -161,16 +160,25 @@ const clickCancel = () => {
   elementById.click();
 };
 
+const resetInfo = () => {
+  userName.value = '';
+  phoneNum.value = '';
+  address.value = '';
+  identityNum.value = '';
+  note.value = '';
+}
+
 const onClickUserSave = () => {
   if (!isValidInfo()) return;
   //localStorage에 저장하고
   //vuex에 갱신
   saveUser(
-    userName.value,
-    phoneNum.value,
-    address.value,
-    identityNum.value,
-    note.value
+      uuid(),
+      userName.value,
+      phoneNum.value,
+      address.value,
+      identityNum.value,
+      note.value
   );
   clickCancel();
 };

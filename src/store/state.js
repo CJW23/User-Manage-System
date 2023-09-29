@@ -1,6 +1,7 @@
 export default {
   userList: [],
   isShowAddUserModal: false,
-  selectUserIdx: -1,
+  selectUserUuid: -1,
   updateUser: {},
+  isAddModal: true,
 };

@@ -252,7 +252,7 @@ const updateUserInput = reactive({
 const onClickUserUpdate = () => {
   if (!isValidInfo()) return;
   updateUser(
-    store.state.selectUserIdx,
+    store.state.selectUserUuid,
     updateUserInput.userName,
     updateUserInput.phoneNum,
     updateUserInput.address,
@@ -274,7 +274,7 @@ const onClickIsUpdate = () => {
 
 const onClickDelete = () => {
   if (confirm("정말 삭제하시겠습니까?")) {
-    deleteUser(store.state.selectUserIdx);
+    deleteUser(store.state.selectUserUuid);
     closeModal();
   }
 };

@@ -12,7 +12,8 @@
     </button>
     <b-container>
       <b-row style="margin-top: 30px; margin-bottom: 30px">
-        <b-col></b-col><b-col></b-col>
+        <b-col></b-col>
+        <b-col></b-col>
         <b-col cols="4">
           <input type="file" id="excelFile" @change="excelUpload" />
         </b-col>
@@ -26,14 +27,15 @@
               class="btn btn-primary"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
-              @click=""
             >
               관리 고객 추가
             </button>
           </div>
         </b-col>
         <b-col cols="2">
-          <b-button @click="downloadExcel" block variant="success">엑셀 다운로드</b-button>
+          <b-button @click="downloadExcel" block variant="success"
+            >엑셀 다운로드</b-button
+          >
         </b-col>
       </b-row>
       <b-row align-v="end" style="margin-top: 30px; margin-bottom: 30px">
@@ -53,7 +55,7 @@
           <b-table striped hover :items="filterUsers" :fields="fields">
             <template #cell(이름)="data">
               <!-- `data.value` is the value after formatted by the Formatter -->
-              <a href="#" @click.prevent.stop="onClickUpdateUser(data.index)">{{
+              <a href="#" @click.prevent.stop="onClickUpdateUser(data)">{{
                 data.value
               }}</a>
             </template>
@@ -103,9 +105,10 @@ const downloadExcel = () => {
   saveExcel(items.value);
 };
 
-const onClickUpdateUser = (index) => {
-  const user = getUser(index);
-  store.commit("SET_UPDATE_USER", { index, user });
+const onClickUpdateUser = (data) => {
+  console.log("data", data);
+  const user = getUser(data.item.uuid);
+  store.commit("SET_UPDATE_USER", { uuid: data.item.uuid, user });
 
   let elementById = document.getElementById("update_modal_btn");
   elementById.click();

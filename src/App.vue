@@ -1,6 +1,6 @@
 <template>
   <UserList />
-  <AddUserModal />
+  <AddUserModal v-if="!!store.state.isAddModal" />
   <UpdateUserModal />
 </template>
 
@@ -8,4 +8,6 @@
 import UserList from "@/components/UserList.vue";
 import AddUserModal from "@/components/AddUserModal.vue";
 import UpdateUserModal from "@/components/UpdateUserModal.vue";
+import {useStore} from "vuex";
+const store = useStore();
 </script>
