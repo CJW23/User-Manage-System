@@ -34,8 +34,8 @@
         </b-col>
         <b-col cols="2">
           <b-button @click="downloadExcel" block variant="success"
-            >엑셀 다운로드</b-button
-          >
+            >엑셀 다운로드
+          </b-button>
         </b-col>
       </b-row>
       <b-row align-v="end" style="margin-top: 30px; margin-bottom: 30px">
@@ -71,6 +71,7 @@ import { computed, ref } from "vue";
 import { saveExcel, uploadExcel } from "@/utils/excel";
 import { useStore } from "vuex";
 import { getUser, getUserList } from "@/utils/localStorage";
+import { BContainer } from "bootstrap-vue-3";
 
 const store = useStore();
 const fields = ["이름", "전화번호", "주소", "주민번호"];

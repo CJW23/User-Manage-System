@@ -165,11 +165,7 @@
             >
               수정하기
             </button>
-            <button
-              @click="onClickDelete"
-              type="button"
-              class="btn btn-danger"
-            >
+            <button @click="onClickDelete" type="button" class="btn btn-danger">
               삭제하기
             </button>
           </template>
